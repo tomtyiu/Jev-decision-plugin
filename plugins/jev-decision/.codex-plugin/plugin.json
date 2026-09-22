@@ -1,0 +1,34 @@
+{
+  "name": "jev-decision",
+  "version": "0.1.0",
+  "description": "Typed, calibrated micro-decisions with TypeSafe Jev for agent routing, classification, scoring, extraction validation, guardrails, and gating.",
+  "author": {
+    "name": "Jev-decision"
+  },
+  "license": "MIT",
+  "keywords": [
+    "typesafe-ai",
+    "jev",
+    "routing",
+    "classification",
+    "scoring",
+    "guardrails",
+    "gating",
+    "agents"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Jev-decision",
+    "shortDescription": "Typed calibrated micro-decisions for agents",
+    "longDescription": "Turn noisy state into a typed Choice, Score, or yes/no probability using TypeSafe Jev. Designed for fast agent routing, classification, scoring, extraction validation, guardrails, and confidence-aware gates.",
+    "developerName": "Jev-decision",
+    "category": "Productivity",
+    "capabilities": ["Interactive"],
+    "websiteURL": "https://docs.typesafe.ai/introduction",
+    "defaultPrompt": [
+      "Route this input with a typed Jev decision.",
+      "Score this state with a calibrated rubric.",
+      "Gate this action with a yes/no probability."
+    ]
+  }
+}
