@@ -1,0 +1,29 @@
+{
+  "state": "The customer says the API integration fails during OAuth and asks whether they were charged twice.",
+  "decisions": {
+    "primary_route": {
+      "kind": "choice",
+      "question": "Which handler should own the primary issue?",
+      "options": {
+        "technical": "Integration failures, bugs, OAuth, API behavior",
+        "billing": "Charges, invoices, refunds, subscription payments",
+        "other": "Does not fit either handler"
+      }
+    },
+    "has_billing_component": {
+      "kind": "probability",
+      "question": "Does the request contain a billing or payment issue?"
+    }
+  },
+  "policy": {
+    "primary_route": {
+      "min_confidence": 0.65,
+      "on_uncertain": "review"
+    },
+    "has_billing_component": {
+      "yes_at": 0.8,
+      "no_at": 0.2,
+      "on_uncertain": "review"
+    }
+  }
+}
