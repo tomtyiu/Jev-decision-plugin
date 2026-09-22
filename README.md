@@ -1,6 +1,6 @@
 # Jev-decision
 
-A Codex plugin that turns messy input into small, typed, calibrated decisions using TypeSafe Jev.
+A Codex plugin that turns noisy input into small, typed, calibrated decisions using TypeSafe Jev.
 
 It is designed for the high-volume judgments inside agents that are too fuzzy for a brittle handwritten `if`, but too small to justify open-ended frontier-model generation: routing, classification, scoring, extraction validation, guardrails, and gates.
 
