@@ -1,34 +1,37 @@
 {
   "name": "jev-decision",
-  "version": "0.1.0",
-  "description": "Typed, calibrated micro-decisions with TypeSafe Jev for agent routing, classification, scoring, extraction validation, guardrails, and gating.",
+  "version": "0.2.0",
+  "description": "Build AI-powered software with TypeSafe System One and Jev using typed judgments, calibrated probabilities, and composable decision primitives.",
   "author": {
     "name": "Jev-decision"
   },
   "license": "MIT",
   "keywords": [
     "typesafe-ai",
+    "system-one",
     "jev",
     "routing",
+    "ranking",
     "classification",
     "scoring",
+    "extraction",
+    "verification",
     "guardrails",
-    "gating",
     "agents"
   ],
   "skills": "./skills/",
   "interface": {
     "displayName": "Jev-decision",
-    "shortDescription": "Typed calibrated micro-decisions for agents",
-    "longDescription": "Turn messy state into a typed Choice, Score, or yes/no probability using TypeSafe Jev. Designed for fast agent routing, classification, scoring, extraction validation, guardrails, and confidence-aware gates.",
+    "shortDescription": "Programmable common sense with TypeSafe Jev",
+    "longDescription": "Build TypeSafe System One workflows that turn natural language and application state into typed judgments and calibrated probabilities for routing, ranking, extraction, verification, and interactive agent decisions.",
     "developerName": "Jev-decision",
     "category": "Productivity",
     "capabilities": ["Interactive"],
     "websiteURL": "https://docs.typesafe.ai/introduction",
     "defaultPrompt": [
-      "Route this input with a typed Jev decision.",
-      "Score this state with a calibrated rubric.",
-      "Gate this action with a yes/no probability."
+      "Use TypeSafe Jev to turn this application state into typed judgments.",
+      "Design a System One workflow for this feature using Choice, Noul, or Score.",
+      "Replace this prompt-and-parse step with a structured TypeSafe decision."
     ]
   }
 }
