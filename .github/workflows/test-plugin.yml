@@ -1,0 +1,47 @@
+name: Test Jev-decision plugin
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Validate marketplace JSON
+        run: |
+          python -m json.tool .agents/plugins/marketplace.json >/dev/null
+          python -m json.tool plugins/jev-decision/.codex-plugin/plugin.json >/dev/null
+
+      - name: Verify marketplace paths
+        run: |
+          test -f plugins/jev-decision/skills/jev-decision/SKILL.md
+          test -f plugins/jev-decision/scripts/jev_decide.py
+          test -f plugins/jev-decision/examples/router.json
+          test -f plugins/jev-decision/examples/guardrail-gate.json
+
+      - name: Run unit tests
+        working-directory: plugins/jev-decision
+        run: python -m unittest discover -s tests -v
+
+      - name: Test router dry run
+        working-directory: plugins/jev-decision
+        run: python scripts/jev_decide.py --input examples/router.json --dry-run
+
+      - name: Test guardrail dry run
+        working-directory: plugins/jev-decision
+        run: python scripts/jev_decide.py --input examples/guardrail-gate.json --dry-run
