@@ -1,0 +1,24 @@
+{
+  "state": {
+    "requested_action": "delete project data",
+    "message": "Please clean this up for me.",
+    "context": "The user has not explicitly confirmed deletion in this turn."
+  },
+  "decisions": {
+    "explicit_delete_intent": {
+      "kind": "probability",
+      "question": "Does the current user message explicitly request deletion of project data?",
+      "criteria": {
+        "true": "The user directly asks to delete or permanently remove the data.",
+        "false": "The request is ambiguous, indirect, or does not ask for deletion."
+      }
+    }
+  },
+  "policy": {
+    "explicit_delete_intent": {
+      "yes_at": 0.95,
+      "no_at": 0.1,
+      "on_uncertain": "clarify"
+    }
+  }
+}
