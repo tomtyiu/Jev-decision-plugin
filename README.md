@@ -1,16 +1,31 @@
 # Jev-decision
 
-A Codex plugin that turns noisy input into small, typed, calibrated decisions using TypeSafe Jev.
+A Codex plugin and marketplace package for building AI-powered software with TypeSafe System One and Jev.
 
-It is designed for the high-volume judgments inside agents that are too fuzzy for a brittle handwritten `if`, but too small to justify open-ended frontier-model generation: routing, classification, scoring, extraction validation, guardrails, and gates.
+The plugin turns natural language and application state into small, typed, calibrated judgments that code can compose. It supports patterns such as routing, ranking, extraction, verification, scoring, guardrails, gating, and interactive agent decisions.
+
+## Source of truth
+
+The root skill is the canonical skill definition:
+
+- `skills/jev-decision/SKILL.md`
+
+The marketplace package mirrors that file at:
+
+- `plugins/jev-decision/skills/jev-decision/SKILL.md`
+
+CI verifies that both copies stay identical.
 
 ## Included
 
-- `.codex-plugin/plugin.json` — Codex plugin manifest.
-- `skills/jev-decision/SKILL.md` — agent skill and decision architecture.
+- `.agents/plugins/marketplace.json` — Codex marketplace catalog.
+- `.codex-plugin/plugin.json` — standalone plugin manifest.
+- `skills/jev-decision/SKILL.md` — canonical TypeSafe skill.
+- `plugins/jev-decision/` — installable marketplace copy.
 - `scripts/jev_decide.py` — dependency-free Python wrapper for TypeSafe's System One HTTP API.
 - `examples/` — routing and guardrail-gating request examples.
 - `tests/` — offline tests for request compilation and gating behavior.
+- `.github/workflows/test-plugin.yml` — CI validation and sync checks.
 
 ## Requirements
 
@@ -22,18 +37,37 @@ No third-party Python package is required by the wrapper.
 ## Test locally
 
 ```bash
-python -m unittest discover -s tests -v
-python scripts/jev_decide.py --input examples/router.json --dry-run
+python -m unittest discover -s plugins/jev-decision/tests -v
+python plugins/jev-decision/scripts/jev_decide.py --input plugins/jev-decision/examples/router.json --dry-run
 ```
 
-## Install as a local Codex plugin
+## Marketplace
 
-Place the plugin folder at a location Codex can load, such as a personal plugin directory, then add it to the appropriate Codex plugin marketplace configuration if needed by your environment.
+Marketplace name:
 
-The canonical plugin folder name is `jev-decision`; the user-facing display name is `Jev-decision`.
+```text
+jev-decision-marketplace
+```
 
-## TypeSafe references
+Plugin name:
 
-- https://docs.typesafe.ai/introduction
-- https://docs.typesafe.ai/introduction/quickstart
-- https://docs.typesafe.ai/agent-skill
+```text
+jev-decision
+```
+
+The marketplace entry points to:
+
+```text
+./plugins/jev-decision
+```
+
+## TypeSafe documentation
+
+The skill intentionally treats the live TypeSafe documentation as the source of truth.
+
+Start with:
+
+- https://docs.typesafe.ai/llms.txt
+- https://docs.typesafe.ai/concepts/system-one.md
+- https://docs.typesafe.ai/concepts/how-to-build-with-system-one.md
+- https://docs.typesafe.ai/api.md
