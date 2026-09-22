@@ -1,140 +1,149 @@
 ---
-name: jev-decision
-description: Turn messy state into a small typed, calibrated decision using TypeSafe Jev: a fixed choice, an ordered score, or a yes/no probability. Use for high-volume agent routing, classification, scoring, extraction validation, guardrails, and gates when deterministic code is too brittle but open-ended LLM generation is unnecessary. Do not use for long-form generation, extended multi-step reasoning, or decisions that can be made reliably with ordinary deterministic code.
+name: typesafe-ai
+license: MIT
+description: >
+  Build AI-powered software with TypeSafe: small units of AI intelligence you
+  can use like programming primitives. Its System One models, including Jev,
+  turn natural language and application state into typed judgments and
+  probabilities that code can combine. Use when a feature needs programmable
+  common sense, when brainstorming what AI could make possible in an app, or
+  when an LLM prompt-and-parse step could become a structured decision.
+  Applications include routing, ranking, extraction, verification, and
+  interactive experiences; these are starting points, not the limits.
+  Read live docs and cookbooks to find useful patterns and discover new combinations.
 ---
 
-# Jev Decision
+# Build with TypeSafe
 
-Use TypeSafe Jev as a narrow decision component inside a larger agent. The goal is not to generate prose. The goal is to convert messy state into a typed value plus calibrated uncertainty that code can consume.
+TypeSafe makes units of AI intelligence usable like programming primitives: small
+judgments you can compose into larger capabilities. Its **System One models** return
+fast, focused judgments that software can consume directly. **Jev** is TypeSafe's
+flagship and first System One model. It understands natural language and returns
+typed answers and probabilities rather
+than generating text or reasoning explanations. Code owns the workflow; the model
+supplies programmable common sense where ordinary code needs semantic understanding.
 
-## Core contract
+## Read the live docs
 
-Choose exactly one primitive for each atomic judgment:
+**The live TypeSafe docs are the source of truth. Read them as part of the task.**
+This skill gives direction; the docs carry current concepts, prompting guidance,
+API contracts, SDK usage, models, limits, and worked examples.
 
-- **Choice**: one value from a fixed, unordered set. Return the selected choice, the probability distribution, and confidence.
-- **Score**: a position on an ordered rubric. Return the numeric score, the probability distribution across rubric levels, and confidence.
-- **Probability**: a yes/no proposition. Implement this with TypeSafe **Noul** and return the probability that the answer is yes.
+- Start with the [documentation index](https://docs.typesafe.ai/llms.txt) to discover
+  relevant pages and cookbooks. Use targeted reads rather than loading the entire site.
+- Mintlify serves Markdown by appending `.md` to a page path, for example
+  [how to build with TypeSafe](https://docs.typesafe.ai/concepts/how-to-build-with-system-one.md).
+  Follow links from the index; convert extensionless documentation page links to
+  `.md` when useful. Resolve relative links against `https://docs.typesafe.ai`.
+- Before writing an integration, read the current API or chosen SDK page and the
+  question guidance relevant to the design. For a new workflow, also inspect the
+  closest cookbook: it often shows a better decomposition than a generic classifier.
+- If the index is unavailable, use the direct links below or the site's navigation.
+  If Markdown fetching fails, try the normal page. If live access is unavailable,
+  use available local docs or installed SDK types, state that limitation, and avoid
+  inventing version-dependent details.
 
-Prefer several atomic questions in one call over one overloaded question. Combine the resulting dimensions in code.
+| Task | Start here; follow the relevant details |
+| --- | --- |
+| Understand the programming model | [System One](https://docs.typesafe.ai/concepts/system-one.md), [building guide](https://docs.typesafe.ai/concepts/how-to-build-with-system-one.md) |
+| Explore what to build | [Use-case map](https://docs.typesafe.ai/concepts/use-case-map.md), then relevant cookbooks from the index |
+| Prepare inputs and questions | [State](https://docs.typesafe.ai/concepts/state.md), [primitives](https://docs.typesafe.ai/primitives.md), then the chosen primitive's page |
+| Decide how to handle uncertainty | [Confidence](https://docs.typesafe.ai/confidence.md) |
+| Write API code | [HTTP API](https://docs.typesafe.ai/api.md), [Python SDK](https://docs.typesafe.ai/sdk/python.md), or [JavaScript SDK](https://docs.typesafe.ai/sdk/javascript.md) |
+| Update an older integration | [Migration guide](https://docs.typesafe.ai/migrating-to-v1.md) and the installed SDK's current reference |
 
-## When to use it
+## Find the useful shape
 
-Good fits include:
+Start from the behavior the user wants: what will the application show, select,
+change, or hand off? Work backward to the judgments it needs. Keep known rules,
+calculations, exact lookups, and execution in code. Preserve the user's chosen stack
+and scope; add TypeSafe where semantic understanding helps.
 
-- route a request to one handler or tool;
-- classify an event into a known taxonomy;
-- score severity, quality, priority, relevance, or risk against explicit ordered levels;
-- verify or gate an extraction candidate;
-- detect whether a condition is present before an agent acts;
-- add a fuzzy guardrail around an otherwise deterministic workflow;
-- rank candidates using probabilities when the decision is naturally yes/no per candidate.
+When brainstorming or choosing an architecture, consider more than classification.
+The patterns below are starting points: combine primitives around the user's goal,
+including ideas that do not fit an established recipe.
 
-Use a deterministic `if` when the boundary is explicit and stable. Use a stronger reasoning model when the task requires extended reasoning, synthesis, planning, or open-ended generation.
+- **Route and fill known arguments.** A request can select a handler and its typed
+  parameters. Ask useful branch-specific questions up front and consume only the
+  relevant answers. Explore [function calling](https://docs.typesafe.ai/cookbooks/function_calling.md)
+  and [speculative fan-out](https://docs.typesafe.ai/patterns/fan-out.md).
+- **Select instead of generate.** Find candidate values or source spans in code,
+  use a judgment to select the intended one, then copy or normalize it. Code can
+  also assemble source text into a formatted document or reading guide. Explore
+  [value extraction](https://docs.typesafe.ai/cookbooks/pre_parsed_value_extraction_cookbook.md)
+  and [structure recovery](https://docs.typesafe.ai/cookbooks/autoformat.md).
+- **Find and judge evidence.** Retrieve candidates, compare their relevance to a
+  query, and select useful context. Explore [reranking](https://docs.typesafe.ai/cookbooks/rerank_typesafe.md)
+  and [hierarchical classification](https://docs.typesafe.ai/cookbooks/hierarchical_classification.md).
+- **Turn judgments into reusable data.** Score dimensions once, then let code or
+  user controls change weights, thresholds, rankings, and views. With labeled
+  outcomes, those signals can become classical ML features. Explore
+  [composite scoring](https://docs.typesafe.ai/patterns/composite-scoring.md) and
+  [feature discovery](https://docs.typesafe.ai/cookbooks/autoresearch_feature_discovery.md).
+- **Verify and escalate.** Check specific claims or fields against their evidence;
+  send uncertain or failing cases to a person or reasoning model. Explore
+  [citation checks](https://docs.typesafe.ai/cookbooks/citation_check.md) and
+  [extraction cascades](https://docs.typesafe.ai/cookbooks/sde_cascade.md).
+- **Respond to changing state.** Code can retain goals and observations while fresh
+  judgments guide the next bounded step. Keep inferred state distinct from observed
+  facts, and check freshness before applying a result to a changed situation.
 
-## Primitive selection
+For open-ended requests, offer the few directions that best serve the user's goal
+and recommend a starting point. For a concrete request, choose the relevant pattern
+and build; a brainstorm is not a mandatory detour.
 
-Use **Choice** when options are categories, routes, handlers, labels, tools, or known entities. Write option descriptions so neighboring options are clearly separated. Add `other` or `none` when the set is not exhaustive.
+## Design the judgments
 
-Use **Score** when the answer lies on an ordered spectrum. Define 2-10 concrete levels from low to high. Each level should describe observable evidence rather than vague adjectives.
+Choose by what the answer means, then read the relevant primitive page:
 
-Use **Probability / Noul** when the code needs the probability that one proposition is true. Phrase the proposition so a larger number always means “more likely yes.” Split compound propositions into separate questions and combine them in code.
+| Need | Primitive | Important distinction |
+| --- | --- | --- |
+| One of a defined set | [Choice](https://docs.typesafe.ai/primitives/choice.md) | Picks one option; its distribution compares competing options |
+| Whether a condition holds | [Noul](https://docs.typesafe.ai/primitives/noul.md) | Probability of yes; no separate confidence; use one per label when several may apply |
+| Degree along a described dimension | [Score](https://docs.typesafe.ai/primitives/score.md) | Probability-weighted position on ordered levels; use comparable per-item Scores for graded ranking |
 
-## Atomic-question rule
+Give each question enough relevant **state** to answer: source text, identities,
+relationships, policies, and current facts. Prefer named JSON fields when context
+has several parts. Put the judgment in **instructions** and define its possible
+answers in **criteria**. Question IDs are for code and are not sent to the model;
+include complete meaning in the question. Reference nested state with backticked
+paths such as `ticket.messages[0].text`.
 
-Each question should be answerable as one quick judgment from the supplied state. If a question asks about independent dimensions, decompose it.
+Ask one narrow, coherent judgment per question. Split independently useful dimensions,
+without destroying the relationship being judged. A bounded action selection or
+contextual interpretation is valid; atomic does not mean literal fact extraction
+or a one-sentence limit. Strings work for simple questions. Use structured objects
+or arrays when definitions, contrasts, exclusions, or examples clarify instructions
+or criteria. Score levels must describe concrete situations and stand on their own.
 
-Bad: `Is this request urgent, abusive, and eligible for a refund?`
+Keep the needed answers available. Include a no-match outcome when nothing may fit;
+use a separate presence judgment when it is independently useful. For source-value
+selection, check candidate coverage: the model cannot choose an omitted value.
 
-Better: ask three independent decisions, then combine them in application logic.
+## Compose and verify
 
-## Agent workflow
+**Ask independent questions over the same state together**, including useful
+speculative questions. They run in parallel and cannot see one another's answers.
+State each speculative premise explicitly; code consumes the applicable answers.
+A second request is warranted when an earlier answer is needed to fetch evidence,
+construct new state, or determine the next options. Extra questions still use tokens;
+measure actual request budgets, cost, and end-to-end latency.
 
-1. Identify the smallest fuzzy judgment the surrounding code needs.
-2. Select Choice, Score, or Probability/Noul.
-3. Define the answer space or yes/no boundary explicitly.
-4. Send the messy input as `state` and all independent questions together.
-5. Preserve the raw probabilities and confidence in the returned data.
-6. Apply thresholds in code according to the cost of a wrong action.
-7. Route uncertain cases to review, clarification, or a stronger fallback rather than inventing certainty.
+Use probabilities and confidence to guide behavior, with thresholds evaluated on
+the user's data and consequences. Choice/Score confidence summarizes distribution
+concentration, not overall workflow correctness or permission to act. A Noul near
+0.5 means similar probability for yes and no, not medium intensity. Several
+acceptable alternatives can also spread probability; low confidence need not
+invalidate a harmless preference choice. Ignore uncertainty on unused branches.
 
-## Gating and safety
+Keep policy explicit and raw judgments reusable. Weighted scores suit compensating
+preferences; an “any serious violation” rule needs separate conditions. Changing a
+weight or display filter need not rerun inference when evidence and question meanings
+are unchanged. Typed output guarantees the interface, not truth. System One models
+are trained for calibrated decisions; validate their performance in the target domain.
 
-Confidence is a routing signal, not authorization. A high-confidence model output must not bypass deterministic access control, authentication, approval requirements, policy enforcement, or other hard safety checks.
-
-For Choice and Score, gate on returned `confidence` only when the application supplies an explicit threshold. For Probability/Noul, use explicit `yes_at` and `no_at` thresholds. Values between them are uncertain and should follow the configured review/clarify/fallback path.
-
-Do not claim universal threshold values. Thresholds depend on error cost and must be calibrated on representative data. For consequential actions, prefer stricter thresholds plus independent deterministic checks or explicit user approval.
-
-## Extraction guidance
-
-Jev is not a free-form text extractor. Use it for typed extraction when the candidate values are known, or to validate/gate a candidate produced by another parser or model. If the field is arbitrary open-ended text, use a structured extraction mechanism first, then use Jev to validate the result if useful.
-
-## Normalized request format
-
-The included `scripts/jev_decide.py` accepts this agent-friendly shape:
-
-```json
-{
-  "state": "messy input or a JSON-compatible object",
-  "model": "jev-latest",
-  "decisions": {
-    "route": {
-      "kind": "choice",
-      "question": "Which handler should receive this request?",
-      "options": {
-        "billing": "Payments, invoices, refunds, or subscription charges",
-        "technical": "Product bugs, failures, or integration problems",
-        "other": "Does not fit the listed handlers"
-      }
-    },
-    "severity": {
-      "kind": "score",
-      "question": "How severe is the operational impact?",
-      "levels": [
-        "No meaningful impact",
-        "Minor degradation with workaround",
-        "Major degradation or blocked workflow",
-        "Critical outage or widespread failure"
-      ]
-    },
-    "needs_review": {
-      "kind": "probability",
-      "question": "Does this case require human review?"
-    }
-  },
-  "policy": {
-    "route": {"min_confidence": 0.7, "on_uncertain": "review"},
-    "severity": {"min_confidence": 0.7, "on_uncertain": "review"},
-    "needs_review": {"yes_at": 0.85, "no_at": 0.15, "on_uncertain": "review"}
-  }
-}
-```
-
-Run with `TYPESAFE_API_KEY` set:
-
-```bash
-python scripts/jev_decide.py --input request.json
-```
-
-To inspect the exact TypeSafe request without making a network call:
-
-```bash
-python scripts/jev_decide.py --input request.json --dry-run
-```
-
-## Output expectations
-
-Return JSON-like typed data to the caller, not narrative prose. Preserve:
-
-- the chosen value or score;
-- the complete probability distribution when TypeSafe provides one;
-- confidence for Choice and Score;
-- the raw yes probability for Probability/Noul;
-- the gate status (`accept`, `review`, or `ungated`);
-- the model identifier.
-
-When the result is uncertain, say so in the typed status instead of silently forcing a decision.
-
-## References
-
-Read `references/typesafe.md` for the TypeSafe API mapping and primary documentation links.
+Test representative cases and the resulting application behavior. For failures,
+inspect the exact state, questions, candidates, answers, composition, and observed
+outcome. Separate missing evidence, model errors, code errors, and service failures.
+Treat cookbook thresholds and demo results as examples to evaluate, not universal
+rules or permanent model limitations. Keep API credentials server-side in web apps.
