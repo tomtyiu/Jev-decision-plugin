@@ -71,3 +71,7 @@ Start with:
 - https://docs.typesafe.ai/concepts/system-one.md
 - https://docs.typesafe.ai/concepts/how-to-build-with-system-one.md
 - https://docs.typesafe.ai/api.md
+
+
+#Thanks
+Thanks to Typesafe.ai
