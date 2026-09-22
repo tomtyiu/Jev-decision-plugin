@@ -29,7 +29,7 @@
     "capabilities": ["Interactive"],
     "websiteURL": "https://docs.typesafe.ai/introduction",
     "composerIcon": "./assets/jev-decision.png",
-    "logo": "./assets/jev-decision.png",
+    "logo": "./logo.png",
     "defaultPrompt": [
       "Use TypeSafe Jev to turn this application state into typed judgments.",
       "Design a System One workflow for this feature using Choice, Noul, or Score.",
