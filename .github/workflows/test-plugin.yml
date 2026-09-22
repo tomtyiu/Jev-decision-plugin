@@ -25,14 +25,24 @@ jobs:
       - name: Validate marketplace JSON
         run: |
           python -m json.tool .agents/plugins/marketplace.json >/dev/null
+          python -m json.tool .codex-plugin/plugin.json >/dev/null
           python -m json.tool plugins/jev-decision/.codex-plugin/plugin.json >/dev/null
 
       - name: Verify marketplace paths
         run: |
+          test -f skills/jev-decision/SKILL.md
           test -f plugins/jev-decision/skills/jev-decision/SKILL.md
           test -f plugins/jev-decision/scripts/jev_decide.py
           test -f plugins/jev-decision/examples/router.json
           test -f plugins/jev-decision/examples/guardrail-gate.json
+
+      - name: Verify skill sync
+        run: |
+          cmp --silent             skills/jev-decision/SKILL.md             plugins/jev-decision/skills/jev-decision/SKILL.md
+
+      - name: Verify manifest sync
+        run: |
+          cmp --silent             .codex-plugin/plugin.json             plugins/jev-decision/.codex-plugin/plugin.json
 
       - name: Run unit tests
         working-directory: plugins/jev-decision
