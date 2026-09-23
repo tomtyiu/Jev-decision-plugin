@@ -75,3 +75,7 @@ Start with:
 
 #Thanks
 Thanks to Typesafe.ai
+
+# Contribution
+
+Please provide create **new issue** for any bugs and suggestions with the jev plugin.
