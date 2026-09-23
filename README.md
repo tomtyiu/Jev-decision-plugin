@@ -5,7 +5,7 @@ A Codex plugin and marketplace package for building AI-powered software with Typ
 The plugin turns natural language and application state into small, typed, calibrated judgments that code can compose. It supports patterns such as routing, ranking, extraction, verification, scoring, guardrails, gating, and interactive agent decisions.
 
 # Install
-Requires Node.js 22+ and your own TYPESAFE_API_KEY in the Codex host environment.
+Requires Python and your own TYPESAFE_API_KEY in the Codex host environment.
 
 ```
 codex plugin marketplace add tomtyiu/Jev-decision-plugin
